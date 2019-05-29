@@ -1,0 +1,95 @@
+/*
+    * Plugin :  an-skill-bar
+    * Version: 1.0.1
+    * Description: A plugin that fills bars with a percentage you set.
+    * Author: Hasan Misbah
+    * Copyright 2018, Hasan Misbah
+    * Free to use and abuse under the MIT license.
+    * http://www.opensource.org/licenses/mit-license.php
+    */
+.skillbar {
+	width: 100%;
+	padding: 5px;
+	margin: 5px 0;
+	position: relative;
+	display: block;
+	overflow: hidden;
+	height: 20px;
+	background-color: #fff;
+	border-radius: 5px 0 0 5px
+}
+
+.skillbar.one .filled {
+	background-color: #babdb6
+}
+
+.skillbar.two .filled {
+	background-color: #e9b96e
+}
+
+.skillbar.three .filled {
+	background-color: #fce94f
+}
+
+.skillbar.four .filled {
+	background-color: #8ae234
+}
+
+.skillbar.five .filled {
+	background-color: #729fcf
+}
+
+.skillbar.six .filled {
+	background-color: #204a87
+}
+
+.skillbar.seven .filled {
+	background-color: #ad7fa8
+}
+
+.skillbar.eight .filled {
+	background-color: #5c3566
+}
+
+.skillbar.nine .filled {
+	background-color: #ef2929
+}
+
+.skillbar.ten .filled {
+	background-color: #a40000
+}
+
+.skillbar .title {
+	background-color: rgba(0, 0, 0, .6);
+	height: 30px;
+	width: 85px;
+	text-align: center;
+	left: 0;
+	color: #f0f0f0;
+	border-radius: 5px 0 0 5px
+}
+
+.skillbar .percent, .skillbar .title {
+	padding: 5px;
+	position: absolute;
+	top: 0;
+	z-index: 9
+}
+
+.skillbar .percent {
+	right: 0;
+	color: #000;
+	font-weight: 700
+}
+
+.skillbar .filled {
+	z-index: 8;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(0, 80, 80, .3);
+	height: 100%;
+	width: 20px;
+	border-radius: 5px 0 0 5px
+}
+/*# sourceMappingURL=an-skill-bar.css.map */

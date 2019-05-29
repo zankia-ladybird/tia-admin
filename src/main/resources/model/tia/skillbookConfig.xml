@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://dbfound.googlecode.com/model" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dbfound.googlecode.com/model http://dbfound.googlecode.com/svn/tags/v2/model.xsd">
+
+	<query>
+		<param name="user_id" dataType="number" scope="session" />
+		<sql>
+		 <![CDATA[
+		 SELECT *
+		 FROM t_skillbook_config
+         #WHERE_CLAUSE#
+         ORDER BY profession asc,book_level asc,score asc
+		  ]]>
+		</sql>
+		<filter name="profession" express="profession in (#{@profession})" />
+		<filter name="book_name" express="book_name like CONCAT('%',${@book_name},'%')" />
+		<filter name="book_level" express="book_level = ${@book_level}" />
+	</query>
+	
+	<execute name="add">
+		<param name="book_name" dataType="varchar" />
+		<param name="book_level" dataType="number" />
+		<param name="profession" dataType="number" />
+		<param name="score" dataType="number" />
+		<param name="user_id" dataType="number" scope="session" />
+		<sqls>
+			<executeSql>
+				<![CDATA[
+					INSERT INTO t_skillbook_config (
+						book_name,
+						book_level,
+						profession,
+						score
+					) 
+					VALUES(
+						${@book_name},
+						${@book_level},
+						${@profession},
+						${@score}
+					);
+				]]>
+			</executeSql>
+		</sqls>
+	</execute>
+	
+	<execute name="update">
+		<param name="id" dataType="number" />
+		<param name="book_name" dataType="varchar" />
+		<param name="book_level" dataType="number" />
+		<param name="profession" dataType="number" />
+		<param name="score" dataType="number" />
+		<param name="user_id" dataType="number" scope="session" />
+		<sqls>
+			<executeSql>
+				<![CDATA[
+					UPDATE t_skillbook_config
+					SET
+						book_name = ${@book_name},
+						book_level = ${@book_level},
+						profession = ${@profession},
+						score = ${@score}
+					WHERE id = ${@id}
+				]]>
+			</executeSql>
+		</sqls>
+	</execute>
+	
+	<execute name="delete">
+		<param name="id" dataType="number" />
+		<sqls>
+			<executeSql>
+				<![CDATA[
+					delete from t_skillbook_config where id = ${@id}
+				]]>
+			</executeSql>
+		</sqls>
+	</execute>
+	
+</model>

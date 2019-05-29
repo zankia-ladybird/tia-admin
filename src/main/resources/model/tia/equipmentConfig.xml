@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://dbfound.googlecode.com/model" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dbfound.googlecode.com/model http://dbfound.googlecode.com/svn/tags/v2/model.xsd">
+
+	<query>
+		<param name="user_id" dataType="number" scope="session" />
+		<sql>
+		 <![CDATA[
+		 SELECT *
+		 FROM t_equipment_config
+         #WHERE_CLAUSE#
+         ORDER BY equipment_level asc,profession asc,equipment_type asc,score asc
+		  ]]>
+		</sql>
+		<filter name="profession" express="profession in (#{@profession})" />
+		<filter name="equipment_name" express="equipment_name like CONCAT('%',${@equipment_name},'%')" />
+		<filter name="equipment_level" express="equipment_level = ${@equipment_level}" />
+	</query>
+	
+	<query name="queryOrderByP">
+		<param name="user_id" dataType="number" scope="session" />
+		<sql>
+		 <![CDATA[
+		 SELECT *
+		 FROM t_equipment_config
+         #WHERE_CLAUSE#
+         ORDER BY real_probability desc
+		  ]]>
+		</sql>
+		<filter name="profession" express="profession in (#{@profession})" />
+		<filter name="equipment_name" express="equipment_name like CONCAT('%',${@equipment_name},'%')" />
+		<filter name="equipment_level" express="equipment_level = ${@equipment_level}" />
+	</query>
+	
+	<execute name="add">
+		<param name="equipment_name" dataType="varchar" />
+		<param name="equipment_level" dataType="number" />
+		<param name="equipment_type" dataType="number" />
+		<param name="profession" dataType="number" />
+		<param name="score" dataType="number" />
+		<param name="user_id" dataType="number" scope="session" />
+		<sqls>
+			<executeSql>
+				<![CDATA[
+					INSERT INTO t_equipment_config (
+						equipment_name,
+						equipment_level,
+						equipment_type,
+						profession,
+						score
+					) 
+					VALUES(
+						${@equipment_name},
+						${@equipment_level},
+						${@equipment_type},
+						${@profession},
+						${@score}
+					);
+				]]>
+			</executeSql>
+		</sqls>
+	</execute>
+	
+	<execute name="update">
+		<param name="id" dataType="number" />
+		<param name="equipment_name" dataType="varchar" />
+		<param name="equipment_level" dataType="number" />
+		<param name="equipment_type" dataType="number" />
+		<param name="profession" dataType="number" />
+		<param name="score" dataType="number" />
+		<param name="user_id" dataType="number" scope="session" />
+		<sqls>
+			<executeSql>
+				<![CDATA[
+					UPDATE t_equipment_config
+					SET
+						equipment_name = ${@equipment_name},
+						equipment_level = ${@equipment_level},
+						equipment_type = ${@equipment_type},
+						profession = ${@profession},
+						score = ${@score}
+					WHERE id = ${@id}
+				]]>
+			</executeSql>
+		</sqls>
+	</execute>
+	
+	<execute name="updateProbability">
+		<param name="id" dataType="number" />
+		<param name="real_probability" dataType="number" />
+		<param name="user_id" dataType="number" scope="session" />
+		<sqls>
+			<executeSql>
+				<![CDATA[
+					UPDATE t_equipment_config
+					SET
+						real_probability = ${@real_probability}
+					WHERE id = ${@id}
+				]]>
+			</executeSql>
+		</sqls>
+	</execute>
+	
+	<execute name="delete">
+		<param name="id" dataType="number" />
+		<sqls>
+			<executeSql>
+				<![CDATA[
+					delete from t_equipment_config where id = ${@id}
+				]]>
+			</executeSql>
+		</sqls>
+	</execute>
+</model>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://dbfound.googlecode.com/model" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dbfound.googlecode.com/model http://dbfound.googlecode.com/svn/tags/v2/model.xsd">
+
+	<query>
+		<param name="user_id" dataType="number" scope="session" />
+		<sql>
+		 <![CDATA[
+		 SELECT *
+		 FROM t_skillbook_publicity
+         #WHERE_CLAUSE#
+         ORDER BY opt_time desc
+		  ]]>
+		</sql>
+		<filter name="book_name" express="book_name like CONCAT('%',${@book_name},'%')" />
+		<filter name="book_level" express="book_level = ${@book_level}" />
+		<filter name="server" express="server = ${@server}" />
+	</query>
+	
+	<query name="queryDuplicate">
+		<param name="bookName" dataType="varchar" />
+		<param name="optUser" dataType="varchar" />
+		<param name="optTime" dataType="varchar" />
+		<param name="user_id" dataType="number" scope="session" />
+		<sql>
+		 <![CDATA[
+		 SELECT *
+		 FROM t_skillbook_publicity
+		 WHERE book_name=${@bookName} AND opt_user=${@optUser} AND opt_time=${@optTime} 
+         ORDER BY opt_time desc
+		  ]]>
+		</sql>
+	</query>
+	
+	<execute name="add">
+		<param name="reqId" dataType="varchar" />
+		<param name="bookName" dataType="varchar" />
+		<param name="bookLevel" dataType="number" />
+		<param name="server" dataType="varchar" />
+		<param name="optUser" dataType="varchar" />
+		<param name="optTime" dataType="varchar" />
+		<param name="user_id" dataType="number" scope="session" />
+		<sqls>
+			<executeSql>
+				<![CDATA[
+					INSERT INTO t_skillbook_publicity (
+						req_id,
+						book_name,
+						book_level,
+						server,
+						opt_user,
+						opt_time
+					) 
+					VALUES(
+						${@reqId},
+						${@bookName},
+						${@bookLevel},
+						${@server},
+						${@optUser},
+						${@optTime}
+					)
+					ON DUPLICATE KEY UPDATE 
+						book_name=${@bookName},
+						book_level=${@bookLevel},
+						server=${@server},
+						opt_user=${@optUser},
+						opt_time=${@optTime}
+				]]>
+			</executeSql>
+		</sqls>
+	</execute>
+	
+</model>

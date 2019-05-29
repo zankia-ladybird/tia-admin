@@ -1,0 +1,6 @@
+.settings/  
+.project
+.classpath
+/target/
+**/dbfound-conf.xml
+**/syncDataConfig.jsp

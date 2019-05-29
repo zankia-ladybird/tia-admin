@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://dbfound.googlecode.com/model" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dbfound.googlecode.com/model http://dbfound.googlecode.com/svn/tags/v2/model.xsd">
+
+	<query>
+		<param name="user_id" dataType="number" scope="session" />
+		<sql>
+		 <![CDATA[
+		 SELECT *
+		 FROM t_equipment_publicity
+         #WHERE_CLAUSE#
+         ORDER BY opt_time desc
+		  ]]>
+		</sql>
+		<filter name="equipment_name" express="equipment_name like CONCAT('%',${@equipment_name},'%')" />
+		<filter name="equipment_level" express="equipment_level = ${@equipment_level}" />
+		<filter name="server" express="server = ${@server}" />
+	</query>
+	
+	<query name="queryDuplicate">
+		<param name="equipmentName" dataType="varchar"/>
+		<param name="optUser" dataType="varchar"/>
+		<param name="optTime" dataType="varchar"/>
+		<param name="user_id" dataType="number" scope="session" />
+		<sql>
+		 <![CDATA[
+		 SELECT *
+		 FROM t_equipment_publicity
+		 WHERE equipment_name=${@equipmentName} AND opt_user=${@optUser} AND opt_time=${@optTime} 
+         ORDER BY opt_time desc
+		  ]]>
+		</sql>
+	</query>
+	
+	<query name="test">
+		<param name="user_id" dataType="number" scope="session" />
+		<sql>
+		 <![CDATA[
+		 SELECT *
+		 FROM t_equipment_publicity
+		 WHERE equipment_level=2 and server=110 and equipment_name not in ('粗糙水袋','麻布腰带','铁项链','毛皮水带','毛皮腰带','银项链','白银腰带','精皮水袋','金项链','精铁项链','精制水壶','绒布束带','黑铁水壶','秘银项链','精皮束带','秘银水壶','魔金项链','秘银束带')
+         ORDER BY opt_time desc
+		  ]]>
+		</sql>
+	</query>
+	
+	<execute name="add">
+		<param name="reqId" dataType="varchar" />
+		<param name="equipmentName" dataType="varchar" />
+		<param name="equipmentLevel" dataType="number" />
+		<param name="server" dataType="varchar" />
+		<param name="optUser" dataType="varchar" />
+		<param name="optTime" dataType="varchar" />
+		<param name="user_id" dataType="number" scope="session" />
+		<sqls>
+			<executeSql>
+				<![CDATA[
+					INSERT INTO t_equipment_publicity (
+						req_id,
+						equipment_name,
+						equipment_level,
+						server,
+						opt_user,
+						opt_time
+					) 
+					VALUES(
+						${@reqId},
+						${@equipmentName},
+						${@equipmentLevel},
+						${@server},
+						${@optUser},
+						${@optTime}
+					)
+					ON DUPLICATE KEY UPDATE 
+						equipment_name=${@equipmentName},
+						equipment_level=${@equipmentLevel},
+						server=${@server},
+						opt_user=${@optUser},
+						opt_time=${@optTime}
+				]]>
+			</executeSql>
+		</sqls>
+	</execute>
+	
+</model>

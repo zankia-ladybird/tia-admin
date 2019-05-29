@@ -1,0 +1,173 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="dbfound-tags" prefix="d"%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<title>数据同步</title>
+		<d:includeLibrary />
+	</head>
+	<script type="text/javascript">
+
+        function isCellEditable(col, row,name,record) {
+            return false;
+        }
+        
+		function query() {
+			equipmentGrid.query();
+		}
+		
+		function reset() {
+			queryForm.reset();
+		}
+		
+		var statusStore = new Ext.data.SimpleStore( {
+			data : [ [ "0", "失败" ], [ "1", "成功" ]],
+			fields : [ "code", "name" ]
+		});
+
+		function statusRenderer(value){
+    		if(value==0){
+    			value="<font color='red'>失败</font>";
+    		}else if(value==1){
+    			value="<font color='green'>成功</font>";
+    		}
+    		return value;
+    	}
+
+		function sync(){
+			$D.showConfirm("建议不要太过频繁同步数据，确定要执行同步吗", function(btn) {
+				if(btn=="no"){
+					return;
+				}else{
+					syncData();
+				}
+			});
+		}
+		
+		function syncData() {
+			var sync_status=0;
+			var sync_time_start = new Date().getTime();
+			var sync_num=0;
+			var last_data_time;
+		
+			var page = 1;
+			var progress = 0;
+			var second_progress = 0;
+			var finishSync = false;
+			$D.showProgressBar("数据同步","公示数据同步需要较长时间，请耐心等待...",function(){
+				if(!finishSync){
+					var url='http://xxx/xxx?page='+page+'&per_page=200&_='+Date.parse(new Date());
+					console.log(url);
+					$.ajax({
+						  url : url,
+						  async : false,
+						  type : 'get',
+						  dataType : 'jsonp',
+						  success: function(data){
+						  	if(page<101){
+						  		page++;
+						  		$.ajax({
+									  url : 'tia/syncRecord.do!addData',
+									  async : false,
+									  type : 'post',
+									  data : {"syncData":Ext.util.JSON.encode(data)},
+									  success: function(data){
+									  		var obj =  Ext.util.JSON.decode(data);
+					  						if(obj.success==false){
+					  							finishSync = true;
+					  							if(obj.message!=''&&obj.message!=undefined){
+					  								last_data_time = obj.message.split("#")[0];
+					  								sync_num = parseInt(sync_num)+parseInt(obj.message.split("#")[1]);
+					  								sync_status = 1;
+					  							}
+					  						}else{
+					  							sync_num = parseInt(sync_num)+parseInt(200);
+					  						}
+									  },
+									  failure: function() {
+							          }
+							    });
+						  	}else{
+						  		finishSync = true;
+						  	}
+						  	progress=(page*0.007).toFixed(4);
+						  	second_progress=Number(progress);
+						  },
+						  failure: function() {
+				          }  
+					});
+					return progress;
+				}
+				
+				second_progress=Number(second_progress)+Number((1-progress)/10);
+				console.log(second_progress.toFixed(4));
+				if(second_progress.toFixed(4)>1){
+				    return "null";
+				}
+				return second_progress.toFixed(4);
+			});
+			
+			var task=Ext.TaskMgr.start({  
+	            run:function () {  
+	                if(second_progress.toFixed(4)>1){
+			    		Ext.TaskMgr.stop(task); 
+			    		$.ajax({
+							  url : 'tia/syncRecord.do!addRecord',
+							  async : false,
+							  type : 'post',
+							  data : {"sync_status":sync_status, "sync_time":new Date().getTime()-sync_time_start, "sync_num":sync_num, "last_data_time":last_data_time},
+							  success: function(data){
+							  		var obj =  Ext.util.JSON.decode(data);
+			  						if(obj.success==true){
+			  							equipmentGrid.query();
+			  							$D.showMessage("同步已完成");
+			  						}else{
+			  							$D.showMessage("同步发生问题，请联系管理员");
+			  						}
+							  },
+							  failure: function() {
+							  	$D.showMessage("同步发生问题，请联系管理员");
+					          }
+					    });
+	                }
+	            },  
+	            interval:1000
+	        });
+		}
+		
+		function finish(){
+			
+		}
+		
+	</script>
+	<body>
+		<d:form id="queryForm" title="查询条件" labelWidth="80">
+			<d:line columnWidth="0.33">
+				<d:field name="opt_user" anchor="85%" prompt="操作者"  editor="textfield"  >
+				   <d:event name="enter" handle="query"/>
+				</d:field>
+			</d:line>
+		</d:form>
+		<d:buttonGroup>
+			<d:button id="query" title="查询" click="query" />
+			<d:button title="重置" click="reset" />
+		</d:buttonGroup>
+		
+		<d:grid id="equipmentGrid"  singleSelect="false"  isCellEditable="isCellEditable"  forceFit="true"  selectFirstRow="false" height="$D.getFullHeight('equipmentGrid')" title="数据同步"  queryForm="queryForm"  model="tia/syncRecord" autoQuery="true" pagerSize="50">
+			<d:toolBar>
+				<d:gridButton title="同步数据" id="syncBt" icon="DBFoundUI/images/page_attach.png"  beforeAction="sync"/>
+			</d:toolBar>
+			<d:columns>
+					<d:column name="id" sortable="true" required="true" prompt="id" width="80"  hidden="true"/>
+					<d:column name="opt_user" sortable="true" required="true" prompt="操作者"  width="150" />
+					<d:column name="opt_time" sortable="true" required="true" prompt="操作时间"  width="150"/>
+					<d:column name="sync_status" sortable="true" required="true" prompt="同步状态"  width="150" editor="combo"   options="statusStore" displayField="name" valueField="code"  renderer="statusRenderer"/>
+					<d:column name="sync_time" sortable="true" required="true" prompt="同步耗时"  width="150" />
+					<d:column name="sync_num" sortable="true" required="true" prompt="同步数目"  width="150"/>
+					<d:column name="last_data_time" sortable="true" required="true" prompt="最新数据时间"  width="150"/>
+			</d:columns>
+		</d:grid>
+	</body>
+</html>
+

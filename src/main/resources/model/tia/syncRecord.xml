@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://dbfound.googlecode.com/model" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dbfound.googlecode.com/model http://dbfound.googlecode.com/svn/tags/v2/model.xsd">
+
+	<query>
+		<param name="user_id" dataType="number" scope="session" />
+		<sql>
+		 <![CDATA[
+		 SELECT *
+		 FROM t_sync_record
+         #WHERE_CLAUSE#
+         ORDER BY id desc
+		  ]]>
+		</sql>
+		<filter name="opt_user" express="opt_user like CONCAT('%',${@opt_user},'%')" />
+	</query>
+	
+	<execute name="add">
+		<param name="sync_status" dataType="number" />
+		<param name="sync_time" dataType="number" />
+		<param name="sync_num" dataType="number" />
+		<param name="last_data_time" dataType="varchar" />
+		<param name="user_code" dataType="varchar" scope="session" />
+		<sqls>
+			<executeSql>
+				<![CDATA[
+					INSERT INTO t_sync_record (
+						opt_user,
+						opt_time,
+						sync_status,
+						sync_time,
+						sync_num,
+						last_data_time
+					) 
+					VALUES(
+						${@user_code},
+						now(),
+						${@sync_status},
+						${@sync_time},
+						${@sync_num},
+						${@last_data_time}
+					)
+				]]>
+			</executeSql>
+		</sqls>
+	</execute>
+</model>

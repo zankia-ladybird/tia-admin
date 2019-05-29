@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*:before, *:after {
+  box-sizing: inherit;
+}
+
+#skill {
+  width: 100%;
+  background-color: #e3e3e3;
+  padding: 30px;
+  display: block;
+  border-radius: 5px;
+  margin: auto;
+}
+
+h2{
+  margin: 20px;
+  text-align: center;
+  font-weight: 700;
+}

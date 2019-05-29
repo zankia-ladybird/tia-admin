@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dbfound xmlns="http://dbfound.googlecode.com/conf" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://dbfound.googlecode.com/conf https://raw.githubusercontent.com/nfwork/dbfound/master/tags/conf.xsd">
+
+	<system>
+		<openLog>true</openLog>
+		<modeRootPath>${@classpath}/model</modeRootPath>
+		<queryLimit>true</queryLimit>
+		<queryLimitSize>5000</queryLimitSize>
+		<reportQueryLimitSize>50000</reportQueryLimitSize>
+	</system>
+
+	<database>
+		<dataSourceConnectionProvide className="org.apache.commons.dbcp.BasicDataSource" dialect="MySqlDialect">
+			<properties>
+				<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://xxx:3306/xxx?useUnicode=true&amp;characterEncoding=utf8" />
+				<property name="username" value="xxx" />
+				<property name="password" value="xxx" />
+				<property name="initialSize" value="5" />
+				<property name="maxActive" value="200" />
+				<property name="maxIdle" value="5" />
+				<property name="testOnBorrow" value="true" />
+				<property name="validationQuery" value="select 1" />
+			</properties>
+		</dataSourceConnectionProvide>
+	</database>
+
+	<web>
+		<encoding>utf-8</encoding>
+		<mvcConfigFile>${@classpath}/dbfound-mvc.xml</mvcConfigFile>
+		<interceptor>com.zankia.tia.interceptor.AccessCheckInterceptor</interceptor>
+	</web>
+
+</dbfound>
