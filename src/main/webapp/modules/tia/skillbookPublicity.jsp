@@ -6,7 +6,6 @@
 	<head>
 		<title>技能公示</title>
 		<d:includeLibrary />
-		<script type="text/javascript" src="${basePath}js/jquery-3.1.0.min.js"></script>
 	</head>
 	<script type="text/javascript">
 

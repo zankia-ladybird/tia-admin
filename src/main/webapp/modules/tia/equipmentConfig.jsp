@@ -6,12 +6,11 @@
 	<head>
 		<title>装备配置</title>
 		<d:includeLibrary />
-		<script type="text/javascript" src="${basePath}js/jquery-3.1.0.min.js"></script>
 	</head>
 	<script type="text/javascript">
 
-        function isCellEditable(col, row,name,record) {
-        	if(record&&name=='equipment_type'){
+        function isCellEditable(col,row,name,record) {
+        	if(record.json&&name=='equipment_type'){
         		return false;
         	}
             return true;
@@ -36,7 +35,7 @@
 		});
 		
 		var professionStore = new Ext.data.SimpleStore( {
-			data : [ [ "1", "剑士" ], [ "2", "骑士" ],[ "3", "武士" ], [ "4", "战士" ],[ "5", "弓箭手" ], [ "6", "猎人" ],[ "7", "枪手" ], [ "8", "刺客" ], [ "9", "魔法学徒" ],[ "10", "法师" ], [ "11", "牧师" ],[ "12", "萨满" ]],
+			data : [ [ "1", "剑士" ], [ "2", "骑士" ],[ "3", "武士" ], [ "4", "战士" ],[ "5", "弓箭手" ], [ "6", "猎人" ],[ "7", "枪手" ], [ "8", "刺客" ], [ "9", "魔法学徒" ],[ "10", "法师" ], [ "11", "牧师" ],[ "12", "萨满" ],[ "13", "通用职业" ]],
 			fields : [ "code", "name" ]
 		});
 

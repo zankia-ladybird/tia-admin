@@ -82,7 +82,7 @@
 	                        <ul class="sub-menu children dropdown-menu">                
 			        	    	<d:forEach items="${menuList}" var="child">
 									<d:if test="${child.pid==menu.id}">
-										 <li><i class="${child.icon}"></i><a href="../${child.url}" onclick="menuClick('${child.text}')" target="body_iframe">${child.text}</a></li>
+										 <li><i class="${child.icon}"></i><a href="../${child.url}" target="body_iframe">${child.text}</a></li>
 									</d:if>
 								</d:forEach>
 							 </ul>
@@ -146,7 +146,7 @@
 	<script src="${basePath}home/assets/js/lib/flot-chart/jquery.flot.js"></script>
 	<script src="${basePath}home/assets/js/lib/flot-chart/jquery.flot.pie.js"></script>
 	<script src="${basePath}home/assets/js/lib/flot-chart/jquery.flot.spline.js"></script>
-	<script src="${basePath}home/assets/js/lib/moment/moment.js"></script>
+	<script src="${basePath}home/assets/js/moment/moment.js"></script>
 	<script type="text/javascript">
 		function logout() {
 			$.ajax({
