@@ -53,10 +53,11 @@ public class SyncRecordControl implements BaseControl {
 		Date limitday = calendar.getTime();
 
 		int count = 0;
+		String getTime = null;
 		for (TiaData tiaData : syncData.getData()) {
 			count++;
 
-			String getTime = tiaData.getGetTime();
+			getTime = tiaData.getGetTime();
 			DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			Date openDate = format.parse(getTime);
 			if (openDate.before(limitday) && openDate.after(yesterday)) {
@@ -100,6 +101,7 @@ public class SyncRecordControl implements BaseControl {
 		}
 
 		ResponseObject responseObject = new ResponseObject();
+		responseObject.setMessage(getTime + "#" + count);
 		responseObject.setSuccess(true);
 		return responseObject;
 	}

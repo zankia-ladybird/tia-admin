@@ -82,10 +82,13 @@
 					  								sync_status = 1;
 					  							}
 					  						}else{
+					  							last_data_time = obj.message.split("#")[0];
 					  							sync_num = parseInt(sync_num)+parseInt(200);
+					  							sync_status = 1;
 					  						}
 									  },
 									  failure: function() {
+									  		sync_status = 0;
 							          }
 							    });
 						  	}else{
