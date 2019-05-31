@@ -17,7 +17,7 @@
 	</query>
 	
 	<query name="querySpLimit">
-		<param name="limit" dataType="varchar"/>
+		<param name="start" dataType="number"/>
 		<param name="user_id" dataType="number" scope="session" />
 		<sql>
 		 <![CDATA[
@@ -46,15 +46,15 @@
 	</query>
 	
 	<query name="queryCommonLimit">
-		<param name="limit" dataType="varchar"/>
+		<param name="start" dataType="number"/>
 		<param name="user_id" dataType="number" scope="session" />
 		<sql>
 		 <![CDATA[
 		 SELECT *
 		 FROM t_equipment_publicity
-		 WHERE server=107 and equipment_name not in ('粗糙水袋','麻布腰带','铁项链','毛皮水带','毛皮腰带','银项链','白银腰带','精皮水袋','金项链')
+		 WHERE server=107 and equipment_name not in ('粗糙水袋','麻布腰带','铁项链','毛皮水带','毛皮腰带','银项链','白银腰带','精皮水袋','金项链') 
 		 #AND_CLAUSE#
-         ORDER BY opt_time desc
+         ORDER BY opt_time desc 
 		  ]]>
 		</sql>
 		<filter name="equipment_level" express="equipment_level = ${@equipment_level}" />

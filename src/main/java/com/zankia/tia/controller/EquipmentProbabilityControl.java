@@ -19,14 +19,14 @@ public class EquipmentProbabilityControl implements BaseControl {
 	}
 
 	public ResponseObject query(Context context) throws InterruptedException {
-		Integer equipmentLevel=Integer.valueOf((String)context.getData("param.equipment_level"));
-		if(equipmentLevel%2==0) {
+		Integer equipmentLevel = Integer.valueOf((String) context.getData("param.equipment_level"));
+		if (equipmentLevel % 2 == 0) {
 			return querySp(context);
-		}else {
+		} else {
 			return queryCommon(context);
 		}
 	}
-	
+
 	@SuppressWarnings({ "unchecked" })
 	public ResponseObject querySp(Context context) {
 		int min = 10000;
@@ -57,6 +57,7 @@ public class EquipmentProbabilityControl implements BaseControl {
 
 		int maxTimes = 0;
 		int totalTimes = 0;
+		context.setParamData("start", 0);
 		context.setParamData("limit", start);
 		Map<String, Integer> eqShowTimeMap = Maps.newHashMap();
 		QueryResponseObject<Map<String, Object>> limitResponse = ModelEngine.query(context, "tia/equipmentProbability", "querySpLimit");
@@ -71,8 +72,9 @@ public class EquipmentProbabilityControl implements BaseControl {
 		for (Integer showTimes : eqShowTimeMap.values()) {
 			totalTimes += maxTimes - showTimes;
 		}
-		totalTimes+=maxTimes*(18-eqShowTimeMap.keySet().size());
+		totalTimes += maxTimes * (18 - eqShowTimeMap.keySet().size());
 
+		context.setParamData("start", null);
 		context.setParamData("limit", null);
 		QueryResponseObject<Map<String, Object>> equipmentResponse = ModelEngine.query(context, "tia/equipmentConfig", "");
 		for (Map<String, Object> data : equipmentResponse.getDatas()) {
@@ -87,18 +89,18 @@ public class EquipmentProbabilityControl implements BaseControl {
 		}
 		return ModelEngine.query(context, "tia/equipmentConfig", "queryOrderByP");
 	}
-	
+
 	@SuppressWarnings({ "unchecked" })
 	public ResponseObject queryCommon(Context context) throws InterruptedException {
 		int min = 10000;
-		int start = 1;
+		int start = 0;
 		QueryResponseObject<Map<String, Object>> response = ModelEngine.query(context, "tia/equipmentProbability", "queryCommon");
 		Set<String> set = new HashSet<String>();
 		for (int i = 0; i < response.getDatas().size(); i++) {
 			set.add((String) response.getDatas().get(i).get("equipment_name"));
 			if (set.size() == 18) {
 				set.clear();
-				int opennum = i - start + 1;
+				int opennum = i - start;
 				if (opennum <= min) {
 					min = opennum;
 					if (opennum == 18) {
@@ -109,15 +111,16 @@ public class EquipmentProbabilityControl implements BaseControl {
 			}
 		}
 
-		if (start == 1) {
+		if (start == 0 && min != 18) {
 			ResponseObject returnResponse = new ResponseObject();
 			returnResponse.setSuccess(false);
 			returnResponse.setMessage("样本不足，无法执行概率分析");
 			return returnResponse;
 		}
 
-		int maxTimes = 0;
+		int maxTimes = 1;
 		int totalTimes = 0;
+		context.setParamData("start", 0);
 		context.setParamData("limit", start);
 		Map<String, Integer> eqShowTimeMap = Maps.newHashMap();
 		QueryResponseObject<Map<String, Object>> limitResponse = ModelEngine.query(context, "tia/equipmentProbability", "queryCommonLimit");
@@ -132,8 +135,9 @@ public class EquipmentProbabilityControl implements BaseControl {
 		for (Integer showTimes : eqShowTimeMap.values()) {
 			totalTimes += maxTimes - showTimes;
 		}
-		totalTimes+=maxTimes*(18-eqShowTimeMap.keySet().size());
+		totalTimes += maxTimes * (18 - eqShowTimeMap.keySet().size());
 
+		context.setParamData("start", null);
 		context.setParamData("limit", null);
 		QueryResponseObject<Map<String, Object>> equipmentResponse = ModelEngine.query(context, "tia/equipmentConfig", "");
 		for (Map<String, Object> data : equipmentResponse.getDatas()) {

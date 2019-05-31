@@ -79,11 +79,6 @@
 		</d:buttonGroup>
 		
 		<d:grid id="equipmentGrid"  singleSelect="false"  isCellEditable="isCellEditable"  forceFit="true"  selectFirstRow="false" height="$D.getFullHeight('equipmentGrid')" title="装备概率分析"  queryForm="queryForm"  queryUrl="tia/equipmentProbability.do!query" pagerSize="100" >
-			<d:toolBar>
-				<d:gridButton type="add"  />
-				<d:gridButton type="save"  />
-				<d:gridButton type="delete" />
-			</d:toolBar>
 			<d:columns>
 					<d:column name="id" sortable="false" required="true" prompt="id" width="80"  hidden="true"/>
 					<d:column name="equipment_name" sortable="false" required="true" prompt="装备名称"  width="150" editor="textfield"/>
