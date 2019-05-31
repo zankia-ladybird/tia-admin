@@ -60,11 +60,7 @@
 						${@optTime}
 					)
 					ON DUPLICATE KEY UPDATE 
-						book_name=${@bookName},
-						book_level=${@bookLevel},
-						server=${@server},
-						opt_user=${@optUser},
-						opt_time=${@optTime}
+						req_id=${@reqId}
 				]]>
 			</executeSql>
 		</sqls>

@@ -44,7 +44,7 @@ public class SyncRecordControl implements BaseControl {
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
 
-		calendar.add(Calendar.DATE, -2);
+		calendar.add(Calendar.DATE, -10);
 		Date yesterday = calendar.getTime();
 
 		calendar.set(Calendar.HOUR_OF_DAY, 2);

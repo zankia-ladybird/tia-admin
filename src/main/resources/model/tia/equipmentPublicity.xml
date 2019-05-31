@@ -36,10 +36,10 @@
 		<param name="user_id" dataType="number" scope="session" />
 		<sql>
 		 <![CDATA[
-		 SELECT *
-		 FROM t_equipment_publicity
-		 WHERE equipment_level=2 and server=110 and equipment_name not in ('粗糙水袋','麻布腰带','铁项链','毛皮水带','毛皮腰带','银项链','白银腰带','精皮水袋','金项链','精铁项链','精制水壶','绒布束带','黑铁水壶','秘银项链','精皮束带','秘银水壶','魔金项链','秘银束带')
-         ORDER BY opt_time desc
+		 SELECT p.*
+		 FROM t_equipment_publicity p
+		 WHERE p.equipment_level=1 and server=110 and p.equipment_name not in ('粗糙水袋','麻布腰带','铁项链','毛皮水带','毛皮腰带','银项链','精铁项链','精制水壶','绒布束带')
+         ORDER BY p.opt_time desc
 		  ]]>
 		</sql>
 	</query>
@@ -72,11 +72,7 @@
 						${@optTime}
 					)
 					ON DUPLICATE KEY UPDATE 
-						equipment_name=${@equipmentName},
-						equipment_level=${@equipmentLevel},
-						server=${@server},
-						opt_user=${@optUser},
-						opt_time=${@optTime}
+						req_id=${@reqId}
 				]]>
 			</executeSql>
 		</sqls>
