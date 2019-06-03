@@ -72,7 +72,7 @@ public class EquipmentProbabilityControl implements BaseControl {
 		for (Integer showTimes : eqShowTimeMap.values()) {
 			totalTimes += maxTimes - showTimes;
 		}
-		totalTimes += maxTimes * (18 - eqShowTimeMap.keySet().size());
+		totalTimes += maxTimes * (54 - eqShowTimeMap.keySet().size());
 
 		context.setParamData("start", null);
 		context.setParamData("limit", null);
