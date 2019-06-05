@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 	<head>
-		<title>装备概率分析</title>
+		<title>技能书概率分析</title>
 		<d:includeLibrary />
 		<link rel="stylesheet" href="${basePath}css/an-skill-bar.css">
 		<link rel="stylesheet" href="${basePath}css/main.css">
@@ -50,12 +50,7 @@
 		}
 
 		var levelStore = new Ext.data.SimpleStore( {
-			data : [ [ "3", "二阶通用装备" ], [ "4", "二阶专属装备" ],[ "5", "三阶通用装备" ], [ "6", "三阶专属装备" ] ],
-			fields : [ "code", "name" ]
-		});
-		
-		var typeStore = new Ext.data.SimpleStore( {
-			data : [ [ "1", "头盔" ], [ "2", "衣服" ],[ "3", "副手" ], [ "4", "武器" ],[ "5", "手" ], [ "6", "脚" ] ],
+			data : [ [ "2", "低阶中级技能" ],[ "5", "中阶初级技能" ], [ "6", "中阶中级技能" ],[ "9", "高阶初级技能" ]],
 			fields : [ "code", "name" ]
 		});
 		
@@ -68,7 +63,7 @@
 	<body>
 		<d:form id="queryForm" title="查询条件" labelWidth="80">
 			<d:line columnWidth="0.33">
-				<d:field name="equipment_level" anchor="85%" prompt="装备等级"  editor="combo"   options="levelStore" displayField="name" valueField="code" required="true" >
+				<d:field name="book_level" anchor="85%" prompt="技能等级"  editor="combo"   options="levelStore" displayField="name" valueField="code" required="true" >
 				   <d:event name="select" handle="query"/>
 				</d:field>
 			</d:line>
@@ -78,11 +73,10 @@
 			<d:button title="重置" click="reset" />
 		</d:buttonGroup>
 		
-		<d:grid id="equipmentGrid"  singleSelect="false"  isCellEditable="isCellEditable"  forceFit="true"  selectFirstRow="false" height="$D.getFullHeight('equipmentGrid')" title="装备概率分析"  queryForm="queryForm"  queryUrl="tia/equipmentProbability.do!query" pagerSize="200" >
+		<d:grid id="equipmentGrid"  singleSelect="false"  isCellEditable="isCellEditable"  forceFit="true"  selectFirstRow="false" height="$D.getFullHeight('equipmentGrid')" title="技能概率分析"  queryForm="queryForm"  queryUrl="tia/skillbookProbability.do!query" pagerSize="200" >
 			<d:columns>
 					<d:column name="id" sortable="false" required="true" prompt="id" width="80"  hidden="true"/>
-					<d:column name="equipment_name" sortable="false" required="true" prompt="装备名称"  width="150" editor="textfield"/>
-					<d:column name="equipment_type" sortable="false" required="true" prompt="装备类型"  width="150" editor="combo" options="typeStore" displayField="name" valueField="code" />
+					<d:column name="book_name" sortable="false" required="true" prompt="技能名称"  width="150" editor="textfield"/>
 					<d:column name="profession" sortable="false" required="true" prompt="职业"  width="150" editor="combo" options="professionStore" displayField="name" valueField="code"/>
 					<d:column name="probability" sortable="false" required="true" prompt="初始概率"  width="150" editor="numberfield" />
 					<d:column name="real_probability" sortable="false" required="true" prompt="当前概率"  width="150" editor="numberfield" renderer="renderProgress"/>

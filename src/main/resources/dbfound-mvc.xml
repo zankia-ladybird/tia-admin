@@ -6,4 +6,5 @@
 	
 	<action name="tia/syncRecord" class="com.zankia.tia.controller.SyncRecordControl"/>
 	<action name="tia/equipmentProbability" class="com.zankia.tia.controller.EquipmentProbabilityControl"/>
+	<action name="tia/skillbookProbability" class="com.zankia.tia.controller.SkillbookProbabilityControl"/>
 </dbfound-mvc>

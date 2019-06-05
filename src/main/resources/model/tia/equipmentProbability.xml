@@ -8,7 +8,7 @@
 		 <![CDATA[
 		 SELECT *
 		 FROM t_equipment_publicity
-		 WHERE server=110 and equipment_name not in ('精铁项链','精制水壶','绒布束带','黑铁水壶','秘银项链','精皮束带','秘银水壶','魔金项链','秘银束带')
+		 WHERE server=107 and equipment_name not in ('精铁项链','精制水壶','绒布束带','黑铁水壶','秘银项链','精皮束带','秘银水壶','魔金项链','秘银束带')
 		 #AND_CLAUSE#
          ORDER BY opt_time desc
 		  ]]>
@@ -23,7 +23,7 @@
 		 <![CDATA[
 		 SELECT *
 		 FROM t_equipment_publicity
-		 WHERE server=110 and equipment_name not in ('精铁项链','精制水壶','绒布束带','黑铁水壶','秘银项链','精皮束带','秘银水壶','魔金项链','秘银束带')
+		 WHERE server=107 and equipment_name not in ('精铁项链','精制水壶','绒布束带','黑铁水壶','秘银项链','精皮束带','秘银水壶','魔金项链','秘银束带')
 		 #AND_CLAUSE#
          ORDER BY opt_time desc
 		  ]]>

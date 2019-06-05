@@ -48,7 +48,7 @@ public class EquipmentProbabilityControl implements BaseControl {
 			}
 		}
 
-		if (start == 1) {
+		if (start == 1 && min != 54) {
 			ResponseObject returnResponse = new ResponseObject();
 			returnResponse.setSuccess(false);
 			returnResponse.setMessage("样本不足，无法执行概率分析");

@@ -114,24 +114,18 @@ public class SyncRecordControl implements BaseControl {
 			return 2;
 		case "低阶高级技能":
 			return 3;
-		case "低阶超级技能":
-			return 4;
 		case "中阶初级技能":
 			return 5;
 		case "中阶中级技能":
 			return 6;
 		case "中阶高级技能":
 			return 7;
-		case "中阶超级技能":
-			return 8;
 		case "高阶初级技能":
 			return 9;
 		case "高阶中级技能":
 			return 10;
 		case "高阶高级技能":
 			return 11;
-		case "高阶超级技能":
-			return 12;
 		default:
 			return 0;
 		}

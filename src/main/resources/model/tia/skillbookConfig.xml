@@ -17,6 +17,21 @@
 		<filter name="book_level" express="book_level = ${@book_level}" />
 	</query>
 	
+	<query name="queryOrderByP">
+		<param name="user_id" dataType="number" scope="session" />
+		<sql>
+		 <![CDATA[
+		 SELECT *
+		 FROM t_skillbook_config
+         #WHERE_CLAUSE#
+         ORDER BY real_probability desc
+		  ]]>
+		</sql>
+		<filter name="profession" express="profession in (#{@profession})" />
+		<filter name="book_name" express="book_name like CONCAT('%',${@book_name},'%')" />
+		<filter name="book_level" express="book_level = ${@book_level}" />
+	</query>
+	
 	<execute name="add">
 		<param name="book_name" dataType="varchar" />
 		<param name="book_level" dataType="number" />
@@ -59,6 +74,22 @@
 						book_level = ${@book_level},
 						profession = ${@profession},
 						score = ${@score}
+					WHERE id = ${@id}
+				]]>
+			</executeSql>
+		</sqls>
+	</execute>
+	
+	<execute name="updateProbability">
+		<param name="id" dataType="number" />
+		<param name="real_probability" dataType="number" />
+		<param name="user_id" dataType="number" scope="session" />
+		<sqls>
+			<executeSql>
+				<![CDATA[
+					UPDATE t_skillbook_config
+					SET
+						real_probability = ${@real_probability}
 					WHERE id = ${@id}
 				]]>
 			</executeSql>

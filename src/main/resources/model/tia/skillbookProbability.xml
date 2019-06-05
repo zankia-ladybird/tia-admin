@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://dbfound.googlecode.com/model" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dbfound.googlecode.com/model http://dbfound.googlecode.com/svn/tags/v2/model.xsd">
+
+	<query name="querySp">
+		<param name="user_id" dataType="number" scope="session" />
+		<sql>
+		 <![CDATA[
+		 SELECT *
+		 FROM t_skillbook_publicity
+		 WHERE server=107
+		 #AND_CLAUSE#
+         ORDER BY opt_time desc
+		  ]]>
+		</sql>
+		<filter name="book_level" express="book_level = ${@book_level}" />
+	</query>
+	
+	<query name="querySpLimit">
+		<param name="start" dataType="number"/>
+		<param name="user_id" dataType="number" scope="session" />
+		<sql>
+		 <![CDATA[
+		 SELECT *
+		 FROM t_skillbook_publicity
+		 WHERE server=107 
+		 #AND_CLAUSE#
+         ORDER BY opt_time desc
+		  ]]>
+		</sql>
+		<filter name="book_level" express="book_level = ${@book_level}" />
+	</query>
+	
+</model>
