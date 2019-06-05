@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://dbfound.googlecode.com/model" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dbfound.googlecode.com/model http://dbfound.googlecode.com/svn/tags/v2/model.xsd">
+
+	<query>
+		<param name="user_id" dataType="number" scope="session" />
+		<sql>
+		 <![CDATA[
+		 SELECT * 
+		 FROM t_activity_record
+         #WHERE_CLAUSE#
+         ORDER BY id desc
+		  ]]>
+		</sql>
+		<filter name="activity_map" express="activity_map in (#{@activity_map})" />
+		<filter name="date_from" express="DATE(create_date) &gt;= ${@date_from}"/>
+        <filter name="date_to" express="DATE(create_date) &lt;= ${@date_to}"/>
+	</query>
+	
+</model>
