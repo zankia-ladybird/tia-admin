@@ -13,25 +13,27 @@
 
 		function renderProgress(v){
 			var cssstyle='one';
-	        if(v<=10){
+	        if(v<=5){
 	        	cssstyle='one';
-	        }else if(v<=20){
+	        }else if(v<=10){
 	        	cssstyle='two';
-	        }else if(v<=30){
+	        }else if(v<=15){
 	        	cssstyle='three';
-	        }else if(v<=40){
+	        }else if(v<=20){
 	        	cssstyle='four';
-	        }else if(v<=50){
+	        }else if(v<=25){
 	        	cssstyle='five';
-	        }else if(v<=60){
+	        }else if(v<=30){
 	        	cssstyle='six';
-	        }else if(v<=70){
+	        }else if(v<=35){
 	        	cssstyle='seven';
-	        }else if(v<=80){
+	        }else if(v<=40){
 	        	cssstyle='eight';
-	        }else if(v<=90){
+	        }else if(v<=45){
 	        	cssstyle='nine';
-	        }else if(v<=100){
+	        }else if(v<=50){
+	        	cssstyle='ten';
+	        }else{
 	        	cssstyle='ten';
 	        }
 	        return '<div class="skillbar '+cssstyle+'"><div class="filled" data-width="'+v+'%"></div><span class="percent">'+v+'%</span></div>';
@@ -50,7 +52,7 @@
 		}
 
 		var levelStore = new Ext.data.SimpleStore( {
-			data : [ [ "2", "低阶中级技能" ],[ "5", "中阶初级技能" ], [ "6", "中阶中级技能" ],[ "9", "高阶初级技能" ]],
+			data : [ [ "1", "低阶初级技能" ],[ "2", "低阶中级技能" ],[ "5", "中阶初级技能" ], [ "6", "中阶中级技能" ],[ "9", "高阶初级技能" ]],
 			fields : [ "code", "name" ]
 		});
 		

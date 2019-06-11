@@ -65,7 +65,7 @@
 						  type : 'get',
 						  dataType : 'jsonp',
 						  success: function(data){
-						  	if(page<101){
+						  	if(page<50){
 						  		page++;
 						  		$.ajax({
 									  url : 'tia/syncRecord.do!addData',
