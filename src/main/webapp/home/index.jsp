@@ -23,9 +23,10 @@
     <link rel="stylesheet" href="${basePath}home/assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="${basePath}home/assets/css/style.css">
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
-
+    
 	<link href="${basePath}home/assets/css/charts/chartist.min.css" rel="stylesheet">
 	<link href="${basePath}home/assets/css/lib/vector-map/jqvmap.min.css" rel="stylesheet">
+	<script type="text/javascript" charset="utf-8" async="" src="https://cdn.jsdelivr.net/npm/live2d-widget@3.0.4/lib/L2Dwidget.min.js"></script>
 
    <style>
     #weatherWidget .currentDesc {
@@ -159,5 +160,29 @@
 			});
 		}
 	</script>
+	<script type="text/javascript">
+		setTimeout(() => {
+		        L2Dwidget.init({
+		                "model": {
+		                        "scale": 0.5
+		                },
+		               "display": {
+		                        "position": "right",
+		                        "width": 180,
+		                       "height": 260,
+		                        "hOffset": 0,
+		                        "vOffset": -20
+		                },
+		                 "mobile": {
+		                        "show": true,
+		                       "scale": 0.5
+		                 },
+		                 "react": {
+		                         "opacityDefault": 0.7,
+		                        "opacityOnHover": 0.2
+		                 }
+		        });
+		 }, 1000)
+ 	 </script>
 </body>
 </html>

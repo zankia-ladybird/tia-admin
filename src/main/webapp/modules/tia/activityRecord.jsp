@@ -30,7 +30,11 @@
 		});
 		
 		function openAddWindow(){
-			$D.showMessage("活动记录功能正在开发中，开发进度请联系管理员");
+			 url = "modules/tia/activityRecordAddLov.jsp?win=add";
+			DBFound.open("add_window", "新增", 500, 220, url, function() {
+				  activityGrid.getStore().reload();
+			});
+			//$D.showMessage("活动记录功能正在开发中，开发进度请联系管理员");
 		}
 	</script>
 	<body>
