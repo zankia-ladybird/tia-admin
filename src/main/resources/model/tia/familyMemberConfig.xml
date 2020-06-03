@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://dbfound.googlecode.com/model" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dbfound.googlecode.com/model http://dbfound.googlecode.com/svn/tags/v2/model.xsd">
+
+	<query>
+		<param name="user_id" dataType="number" scope="session" />
+		<sql>
+		 <![CDATA[
+		 SELECT *
+		 FROM t_family_member_config
+         #WHERE_CLAUSE#
+         ORDER BY position ASC, level DESC
+		  ]]>
+		</sql>
+		<filter name="profession" express="profession = ${@profession}" />
+		<filter name="member_nickname" express="member_nickname like CONCAT('%',${@member_nickname},'%')" />
+	</query>
+	
+	<execute name="add">
+		<param name="member_nickname" dataType="varchar" />
+		<param name="profession" dataType="number" />
+		<param name="level" dataType="number" />
+		<param name="position" dataType="number" />
+		<param name="join_time" dataType="varchar" />
+		<param name="status" dataType="number" />
+		<param name="user_id" dataType="number" scope="session" />
+		<sqls>
+			<executeSql>
+				<![CDATA[
+					INSERT INTO t_family_member_config (
+						member_nickname,
+						profession,
+						level,
+						position,
+						join_time,
+						status
+					) 
+					VALUES(
+						${@member_nickname},
+						${@profession},
+						${@level},
+						${@position},
+						${@join_time},
+						${@status}
+					);
+				]]>
+			</executeSql>
+		</sqls>
+	</execute>
+	
+	<execute name="update">
+		<param name="family_member_id" dataType="number" />
+		<param name="member_nickname" dataType="varchar" />
+		<param name="profession" dataType="number" />
+		<param name="level" dataType="number" />
+		<param name="position" dataType="number" />
+		<param name="join_time" dataType="varchar" />
+		<param name="status" dataType="number" />
+		<param name="user_id" dataType="number" scope="session" />
+		<sqls>
+			<executeSql>
+				<![CDATA[
+					UPDATE t_family_member_config
+					SET
+						member_nickname = ${@member_nickname},
+						profession = ${@profession},
+						level = ${@level},
+						position = ${@position},
+						join_time = ${@join_time},
+						status = ${@status}
+					WHERE family_member_id = ${@family_member_id}
+				]]>
+			</executeSql>
+		</sqls>
+	</execute>
+	
+	<execute name="delete">
+		<param name="family_member_id" dataType="number" />
+		<sqls>
+			<executeSql>
+				<![CDATA[
+					delete from t_family_member_config where family_member_id = ${@family_member_id}
+				]]>
+			</executeSql>
+		</sqls>
+	</execute>
+</model>

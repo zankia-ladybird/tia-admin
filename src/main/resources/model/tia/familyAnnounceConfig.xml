@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://dbfound.googlecode.com/model" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dbfound.googlecode.com/model http://dbfound.googlecode.com/svn/tags/v2/model.xsd">
+
+	<query>
+		<param name="user_id" dataType="number" scope="session" />
+		<sql>
+		 <![CDATA[
+		 SELECT *
+		 FROM t_family_announce_config
+         #WHERE_CLAUSE#
+         ORDER BY announcement_id ASC
+		  ]]>
+		</sql>
+		<filter name="release_date_from" express="release_date &gt;= ${@release_date_from} " />
+        <filter name="release_date_to" express="release_date &lt;= CONCAT('#{@release_date_to}',' 23:59:59') " />
+	</query>
+	
+	<execute name="add">
+		<param name="announcement_content" dataType="varchar" />
+		<param name="user_code" dataType="varchar" scope="session" />
+		<sqls>
+			<executeSql>
+				<![CDATA[
+					INSERT INTO t_family_announce_config (
+						announcement_content,
+						relase_by,
+						release_date,
+						update_by,
+						update_date
+					) 
+					VALUES(
+						${@announcement_content},
+						${@user_code},
+						NOW(),
+						${@user_code},
+						NOW()
+					);
+				]]>
+			</executeSql>
+		</sqls>
+	</execute>
+	
+	<execute name="update">
+		<param name="announcement_id" dataType="number" />
+		<param name="announcement_content" dataType="varchar" />
+		<param name="user_code" dataType="varchar" scope="session" />
+		<sqls>
+			<executeSql>
+				<![CDATA[
+					UPDATE t_family_announce_config
+					SET
+						announcement_content = ${@announcement_content},
+						update_by = ${@user_code},
+						update_date = NOW()
+					WHERE announcement_id = ${@announcement_id}
+				]]>
+			</executeSql>
+		</sqls>
+	</execute>
+	
+	<execute name="delete">
+		<param name="announcement_id" dataType="number" />
+		<sqls>
+			<executeSql>
+				<![CDATA[
+					delete from t_family_announce_config where announcement_id = ${@announcement_id}
+				]]>
+			</executeSql>
+		</sqls>
+	</execute>
+</model>
